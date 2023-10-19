@@ -10,9 +10,11 @@ import SwiftUI
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
   @Published var showAlert = false
+  var fileName = ""
   var active: Set<Int> = []
 
   func parseSRTFile(url: URL) {
+    fileName = url.deletingPathExtension().lastPathComponent
     do {
       let data = try Data(contentsOf: url)
       let str = String(data: data, encoding: .utf8)
@@ -61,7 +63,6 @@ class ContentViewModel: ObservableObject {
   func updateOffsets() {
     let filtered = subtitles
       .filter { $0.useForResync }
-    //      .map { $0.id }
 
     switch filtered.count {
     case 0:
@@ -76,13 +77,6 @@ class ContentViewModel: ObservableObject {
     default:
       linearTransformation(selected: filtered)
     }
-    //    guard let firstIndex = subtitles.first?.id, let lastIndex = subtitles.last?.id else { return }
-    //    let range = Double(lastIndex - firstIndex)
-    //    for i in 0..<subtitles.count {
-    //      let linearOffset = ((Double(i) / range) * (offset - subtitles[firstIndex].startOffset)) + subtitles[firstIndex].startOffset
-    //      subtitles[i].startOffset = linearOffset
-    //    }
-    //    objectWillChange.send()
   }
 
   private func linearTransformation(selected: [Subtitle]) {

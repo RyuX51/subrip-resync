@@ -7,6 +7,7 @@
 
 import Combine
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ContentView: View {
   @StateObject var viewModel = ContentViewModel()
@@ -32,14 +33,52 @@ struct ContentView: View {
             }
           }
         }.listStyle(PlainListStyle())
+
+        Button(action: {
+          let assembledSRT = assembleSRT(from: viewModel.subtitles)
+          let savePanel = NSSavePanel()
+          savePanel.allowedContentTypes = [UTType(filenameExtension: "srt")!]
+          savePanel.nameFieldStringValue = "\(viewModel.fileName)-resync.srt"
+          savePanel.isExtensionHidden = false
+          savePanel.begin { result in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
+               let url = savePanel.url {
+              do {
+                try assembledSRT.write(to: url, atomically: true, encoding: .utf8)
+              } catch {
+                print("Error saving file: \(error)")
+              }
+            }
+          }
+        }, label: {
+          Label("Save", systemImage: "opticaldiscdrive.fill")
+            .font(.title)
+            .fontDesign(.monospaced)
+            .fontWeight(.bold)
+            .padding(8)
+            .frame(minWidth: 200)
+        })
+        .buttonStyle(.borderedProminent)
+        .clipShape(.capsule)
+        .padding(8)
       }
     }
     .background(Color.cyan)
     .onDrop(of: [.fileURL], delegate: self)
     .alert(isPresented: $viewModel.showAlert, content: {
       Alert(title: Text("Information"), message: Text("If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result."), dismissButton: .default(Text("OK")))
-
     })
+  }
+
+  private func assembleSRT(from subtitles: [Subtitle]) -> String {
+    var srtString = ""
+    for subtitle in subtitles {
+      let start = subtitle.startTime.stringValue
+      let end = subtitle.endTime.stringValue
+      let text = subtitle.text
+      srtString += "\(subtitle.id)\r\n\(start) --> \(end)\r\n\(text)\r\n\r\n"
+    }
+    return srtString
   }
 }
 
