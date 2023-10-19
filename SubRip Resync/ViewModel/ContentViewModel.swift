@@ -35,12 +35,21 @@ class ContentViewModel: ObservableObject {
          let range = components[1].range(of: " --> ") {
         let startTime = Time(components[1][..<range.lowerBound])
         let endTime = Time(components[1][range.upperBound...])
-        let text = components[2]
+        let text = components[2...].joined(separator: "\r\n")
         let subtitle = Subtitle(id: index, startTime: startTime, endTime: endTime, text: text)
         subtitles.append(subtitle)
       }
     }
     return subtitles
+  }
+
+  func assembleSRT(from subtitles: [Subtitle]) -> String {
+    subtitles.map {
+      let start = $0.startTime.string(adding: $0.startOffset)
+      let end = $0.endTime.string(adding: $0.endOffset)
+      let text = $0.text
+      return "\($0.id)\r\n\(start) --> \(end)\r\n\(text)"
+    }.joined(separator: "\r\n\r\n")
   }
 
   func useOffset(from subtitle: Subtitle) {
