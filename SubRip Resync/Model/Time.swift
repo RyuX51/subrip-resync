@@ -23,7 +23,7 @@ struct Time {
     let hours = Int(newValue / (60 * 60))
     let minutes = Int((newValue / 60)) % 60
     let seconds = newValue.truncatingRemainder(dividingBy: 60)
-    return String(format: "%02d:%02d:%2.3f", hours, minutes, seconds).replacingOccurrences(of: ".", with: ",")
+    return String(format: "%02d:%02d:%06.3f", hours, minutes, seconds).replacingOccurrences(of: ".", with: ",")
   }
 
   init(_ stringValue: String) {
