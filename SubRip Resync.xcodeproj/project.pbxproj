@@ -34,6 +34,7 @@
 		AC668C1E2AE0C79D0057816A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		AC835FF72AE1F0090066E133 /* SubtitleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleRow.swift; sourceTree = "<group>"; };
 		AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+DropDelegate.swift"; sourceTree = "<group>"; };
+		AC835FFB2AE1F8D80066E133 /* AppIcon.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AppIcon.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +51,7 @@
 		AC1AE0322AE0523300952CC4 = {
 			isa = PBXGroup;
 			children = (
+				AC835FFB2AE1F8D80066E133 /* AppIcon.playground */,
 				AC1AE03D2AE0523300952CC4 /* SubRip Resync */,
 				AC1AE03C2AE0523300952CC4 /* Products */,
 			);
@@ -346,11 +348,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubRip Resync/SubRip_Resync.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SubRip Resync/Preview Content\"";
-				DEVELOPMENT_TEAM = 67F5SYZYS2;
+				DEVELOPMENT_TEAM = 8D2TMY58PL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -360,7 +363,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.ryux51.subrip-resync";
+				PRODUCT_BUNDLE_IDENTIFIER = "lu.apps.subrip-resync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -373,11 +376,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "SubRip Resync/SubRip_Resync.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SubRip Resync/Preview Content\"";
-				DEVELOPMENT_TEAM = 67F5SYZYS2;
+				DEVELOPMENT_TEAM = 8D2TMY58PL;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -387,7 +391,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.ryux51.subrip-resync";
+				PRODUCT_BUNDLE_IDENTIFIER = "lu.apps.subrip-resync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
