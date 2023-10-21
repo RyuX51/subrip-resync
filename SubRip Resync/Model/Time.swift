@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Time {
+protocol Time: Hashable {
   var stringValue: String { get }
   var doubleValue: Double { get }
 
