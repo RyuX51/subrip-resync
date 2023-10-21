@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
@@ -17,7 +18,6 @@ class ContentViewModel: ObservableObject {
   var subtitleService: SubtitleService!
 
   func parseFile(url: URL) {
-
     fileExtension = url.pathExtension
     switch fileExtension {
     case "srt":
@@ -36,8 +36,43 @@ class ContentViewModel: ObservableObject {
     }
   }
 
-  func assemble(from subtitles: [Subtitle]) -> String {
-    subtitleService.assemble(from: subtitles)
+  func convertToSRT() {
+    if let assService = subtitleService as? ASSService {
+      let subtitles = assService.convertToSRT(assSubs: subtitles)
+      let assembled = SRTService().assemble(from: subtitles)
+      saveToFile(assembled: assembled, fileExtension: "srt")
+    }
+  }
+
+  func assemble(from subtitles: [Subtitle]) {
+    let assembled = subtitleService.assemble(from: subtitles)
+    saveToFile(assembled: assembled, fileExtension: fileExtension)
+  }
+
+  private func saveToFile(assembled: String, fileExtension: String) {
+    let savePanel = NSSavePanel()
+    savePanel.allowedContentTypes = [UTType(filenameExtension: fileExtension)!]
+
+    let nameAddition: String
+    switch active.count {
+    case 0: nameAddition = ""
+    case 1: nameAddition = "-shifted"
+    default: nameAddition = "-resync"
+    }
+
+    savePanel.nameFieldStringValue = "\(fileName)\(nameAddition)." + fileExtension
+    savePanel.isExtensionHidden = false
+    savePanel.begin { result in
+      if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
+         let url = savePanel.url {
+        do {
+          try assembled.write(to: url, atomically: true, encoding: .utf8)
+        } catch {
+          print("Error saving file: \(error)")
+        }
+      }
+    }
+
   }
 
   func useOffset(from subtitle: Subtitle) {

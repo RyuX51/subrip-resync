@@ -125,4 +125,15 @@ struct ASSService: SubtitleService {
     result += textAfterEvents
     return result
   }
+
+  func convertToSRT(assSubs: [Subtitle]) -> [Subtitle] {
+    let srtSubs: [Subtitle] = assSubs.compactMap {
+      let startTime = SRTTime($0.start.string(adding: 0))
+      let endTime = SRTTime($0.end.string(adding: 0))
+      guard let textIndex = format.firstIndex(of: "Text") else { return nil }
+      let components: [String] = [$0.components[textIndex]]
+      return Subtitle(id: $0.id, start: startTime, end: endTime, components: components)
+    }
+    return srtSubs
+  }
 }

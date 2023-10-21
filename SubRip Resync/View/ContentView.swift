@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct ContentView: View {
   @StateObject var viewModel = ContentViewModel()
@@ -20,7 +19,12 @@ struct ContentView: View {
         DropHereView()
       } else {
         listView
-        saveButton
+        HStack {
+          saveButton
+          if viewModel.fileExtension == "ass" {
+            convertButton
+          }
+        }
       }
     }
     .background(Color.cyan)
@@ -52,23 +56,25 @@ struct ContentView: View {
 
   private var saveButton: some View {
     Button(action: {
-      let assembledSRT = viewModel.assemble(from: viewModel.subtitles)
-      let savePanel = NSSavePanel()
-      savePanel.allowedContentTypes = [UTType(filenameExtension: viewModel.fileExtension)!]
-      savePanel.nameFieldStringValue = "\(viewModel.fileName)-resync." + viewModel.fileExtension
-      savePanel.isExtensionHidden = false
-      savePanel.begin { result in
-        if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
-           let url = savePanel.url {
-          do {
-            try assembledSRT.write(to: url, atomically: true, encoding: .utf8)
-          } catch {
-            print("Error saving file: \(error)")
-          }
-        }
-      }
+      viewModel.assemble(from: viewModel.subtitles)
     }, label: {
       Label("Save \(viewModel.fileExtension.uppercased())", systemImage: "opticaldiscdrive.fill")
+        .font(.title)
+        .fontDesign(.monospaced)
+        .fontWeight(.bold)
+        .padding(8)
+        .frame(minWidth: 200)
+    })
+    .buttonStyle(.borderedProminent)
+    .clipShape(.capsule)
+    .padding(8)
+  }
+
+  private var convertButton: some View {
+    Button(action: {
+      viewModel.convertToSRT()
+    }, label: {
+      Label("Save as SRT", systemImage: "opticaldiscdrive.fill")
         .font(.title)
         .fontDesign(.monospaced)
         .fontWeight(.bold)
