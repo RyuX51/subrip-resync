@@ -14,7 +14,7 @@ struct DropHereView: View {
         .resizable()
         .frame(width: 100, height: 100)
         .padding()
-      Text("Drop SRT here")
+      Text("Drop subtitle file here")
         .font(.title)
         .fontWeight(.bold)
         .padding()

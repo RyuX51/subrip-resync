@@ -25,8 +25,11 @@ struct ContentView: View {
     }
     .background(Color.cyan)
     .onDrop(of: [.fileURL], delegate: self)
-    .alert(isPresented: $viewModel.showAlert, content: {
+    .alert(isPresented: $viewModel.showMoreThanTwoSelectedAlert, content: {
       Alert(title: Text("Information"), message: Text("If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result."), dismissButton: .default(Text("OK")))
+    })
+    .alert(isPresented: $viewModel.showInvalidFileAlert, content: {
+      Alert(title: Text("Error"), message: Text("This version supports SRT and ASS files."), dismissButton: .default(Text("OK")))
     })
   }
 
@@ -35,7 +38,8 @@ struct ContentView: View {
       TextField("Search", text: $searchText)
         .padding(4)
       ForEach(viewModel.subtitles.filter { subtitle in
-        self.searchText.isEmpty ? true : subtitle.text.contains(self.searchText)
+        let text = subtitle.components.reduce("") { $0 + " " + $1 }
+        return self.searchText.isEmpty ? true : text.contains(self.searchText)
       }) { subtitle in
         ZStack {
           subtitle.useForResync ? Color.green.opacity(0.2) : Color.clear
@@ -48,10 +52,10 @@ struct ContentView: View {
 
   private var saveButton: some View {
     Button(action: {
-      let assembledSRT = viewModel.assembleSRT(from: viewModel.subtitles)
+      let assembledSRT = viewModel.assemble(from: viewModel.subtitles)
       let savePanel = NSSavePanel()
-      savePanel.allowedContentTypes = [UTType(filenameExtension: "srt")!]
-      savePanel.nameFieldStringValue = "\(viewModel.fileName)-resync.srt"
+      savePanel.allowedContentTypes = [UTType(filenameExtension: viewModel.fileExtension)!]
+      savePanel.nameFieldStringValue = "\(viewModel.fileName)-resync." + viewModel.fileExtension
       savePanel.isExtensionHidden = false
       savePanel.begin { result in
         if result.rawValue == NSApplication.ModalResponse.OK.rawValue,
@@ -64,7 +68,7 @@ struct ContentView: View {
         }
       }
     }, label: {
-      Label("Save", systemImage: "opticaldiscdrive.fill")
+      Label("Save \(viewModel.fileExtension.uppercased())", systemImage: "opticaldiscdrive.fill")
         .font(.title)
         .fontDesign(.monospaced)
         .fontWeight(.bold)

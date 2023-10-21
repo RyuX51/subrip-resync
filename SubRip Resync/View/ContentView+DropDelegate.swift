@@ -14,7 +14,7 @@ extension ContentView: DropDelegate {
     itemProvider.loadItem(forTypeIdentifier: "public.file-url", options: nil) { urlData, _ in
       DispatchQueue.main.async {
         guard let urlData = urlData as? Data, let url = NSURL(absoluteURLWithDataRepresentation: urlData, relativeTo: nil) as URL? else { return }
-        self.viewModel.parseSRTFile(url: url)
+        self.viewModel.parseFile(url: url)
       }
     }
     return true

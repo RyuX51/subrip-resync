@@ -3,4 +3,150 @@
    uuid = "4C0F233A-2AB6-41DB-B041-CE4DD1FAA4B1"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BF38B3F6-32AA-40FE-B03F-B98AB2306EAC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SubRip Resync/Services/SRTService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "printComponents(subtitle:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BF38B3F6-32AA-40FE-B03F-B98AB2306EAC - fdb4647fd666341f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SubRip_Resync.SRTService.printComponents(subtitle: SubRip_Resync.Subtitle) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/SRTService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "56">
+               </Location>
+               <Location
+                  uuid = "BF38B3F6-32AA-40FE-B03F-B98AB2306EAC - fdb4647fd666341f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SubRip_Resync.SRTService.printComponents(subtitle: SubRip_Resync.Subtitle) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/SRTService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "44"
+                  endingLineNumber = "44"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "808220C3-7811-4F84-8196-95D1439F14BD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SubRip Resync/Services/ASSService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "printComponents(subtitle:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "808220C3-7811-4F84-8196-95D1439F14BD - d71bab87fe6e8813"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SubRip_Resync.ASSService.printComponents(subtitle: SubRip_Resync.Subtitle) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/ASSService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "96"
+                  endingLineNumber = "96"
+                  offsetFromSymbolStart = "48">
+               </Location>
+               <Location
+                  uuid = "808220C3-7811-4F84-8196-95D1439F14BD - 560e084d9d7fff14"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String, Swift.String) -&gt; Swift.Optional&lt;Swift.String&gt; in SubRip_Resync.ASSService.printComponents(subtitle: SubRip_Resync.Subtitle) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/ASSService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97"
+                  offsetFromSymbolStart = "80">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9E79CF99-BDC5-4A6E-A37C-E46296674556"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SubRip Resync/Services/ASSService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "assemble(from:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9E79CF99-BDC5-4A6E-A37C-E46296674556 - b799bb7233840e9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SubRip_Resync.Subtitle) -&gt; Swift.String in SubRip_Resync.ASSService.assemble(from: Swift.Array&lt;SubRip_Resync.Subtitle&gt;) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/ASSService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "1000">
+               </Location>
+               <Location
+                  uuid = "9E79CF99-BDC5-4A6E-A37C-E46296674556 - b799bb7233840e9a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SubRip_Resync.Subtitle) -&gt; Swift.String in SubRip_Resync.ASSService.assemble(from: Swift.Array&lt;SubRip_Resync.Subtitle&gt;) -&gt; Swift.String"
+                  moduleName = "SubRip Resync"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mario/Repository/SubRip%20Resync/SubRip%20Resync/Services/ASSService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "392">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

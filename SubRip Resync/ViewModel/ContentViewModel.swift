@@ -9,52 +9,40 @@ import SwiftUI
 
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
-  @Published var showAlert = false
+  @Published var showMoreThanTwoSelectedAlert = false
+  @Published var showInvalidFileAlert = false
   var fileName = ""
+  var fileExtension = ""
   var active: Set<Int> = []
+  var subtitleService: SubtitleService!
 
-  func parseSRTFile(url: URL) {
-    fileName = url.deletingPathExtension().lastPathComponent
-    do {
-      let data = try Data(contentsOf: url)
-      let str = String(data: data, encoding: .utf8)
-      self.subtitles = parseSubtitles(str ?? "")
-    } catch {
-      print("Error: \(error)")
+  func parseFile(url: URL) {
+
+    fileExtension = url.pathExtension
+    switch fileExtension {
+    case "srt":
+      subtitleService = SRTService()
+    case "ass":
+      subtitleService = ASSService()
+    default:
+      showInvalidFileAlert = true
+      return
+    }
+
+    subtitleService.parseFile(url: url) { fileName, subtitles in
+      self.fileName = fileName
+      self.fileExtension = fileExtension
+      self.subtitles = subtitles
     }
   }
 
-  private func parseSubtitles(_ str: String) -> [Subtitle] {
-    let lines = str.components(separatedBy: "\r\n\r\n")
-    var subtitles: [Subtitle] = []
-
-    for line in lines {
-      let components = line.components(separatedBy: "\r\n")
-      if components.count >= 3,
-         let index = Int(components[0]),
-         let range = components[1].range(of: " --> ") {
-        let startTime = Time(components[1][..<range.lowerBound])
-        let endTime = Time(components[1][range.upperBound...])
-        let text = components[2...].joined(separator: "\r\n")
-        let subtitle = Subtitle(id: index, startTime: startTime, endTime: endTime, text: text)
-        subtitles.append(subtitle)
-      }
-    }
-    return subtitles
-  }
-
-  func assembleSRT(from subtitles: [Subtitle]) -> String {
-    subtitles.map {
-      let start = $0.startTime.string(adding: $0.startOffset)
-      let end = $0.endTime.string(adding: $0.endOffset)
-      let text = $0.text
-      return "\($0.id)\r\n\(start) --> \(end)\r\n\(text)"
-    }.joined(separator: "\r\n\r\n")
+  func assemble(from subtitles: [Subtitle]) -> String {
+    subtitleService.assemble(from: subtitles)
   }
 
   func useOffset(from subtitle: Subtitle) {
     if active.count == 2 && !active.contains(subtitle.id) {
-      showAlert = true
+      showMoreThanTwoSelectedAlert = true
     }
     subtitle.useForResync = true
     active.insert(subtitle.id)
@@ -93,15 +81,15 @@ class ContentViewModel: ObservableObject {
     guard let first = sorted.first,
           let last = sorted.last else { return }
 
-    let firstStartTime = first.startTime.doubleValue
+    let firstStartTime = first.start.doubleValue
     let firstOffset = first.startOffset
-    let lastStartTime = last.startTime.doubleValue
+    let lastStartTime = last.start.doubleValue
     let lastOffset = last.startOffset
     let offsetOverTime = (lastOffset - firstOffset) / (lastStartTime - firstStartTime)
 
     for subtitle in subtitles {
-      subtitle.startOffset = (subtitle.startTime.doubleValue - firstStartTime) * offsetOverTime + firstOffset
-      subtitle.endOffset = (subtitle.endTime.doubleValue - firstStartTime) * offsetOverTime + firstOffset
+      subtitle.startOffset = (subtitle.start.doubleValue - firstStartTime) * offsetOverTime + firstOffset
+      subtitle.endOffset = (subtitle.end.doubleValue - firstStartTime) * offsetOverTime + firstOffset
     }
   }
 }

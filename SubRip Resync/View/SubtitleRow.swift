@@ -17,10 +17,13 @@ struct SubtitleRow: View {
 
   var body: some View {
     HStack {
-      VStack(alignment: .leading) {
+      VStack(alignment: .leading, spacing: 4) {
         Text("\(subtitle.id)")
-        Text("\(subtitle.startTime.stringValue) --> \(subtitle.endTime.stringValue)")
-        Text("\(subtitle.text)")
+          .font(.footnote)
+        Text(viewModel.subtitleService.printTime(subtitle: subtitle))
+          .fontWeight(.bold)
+        Text(viewModel.subtitleService.printComponents(subtitle: subtitle))
+          .font(.footnote)
       }.fontDesign(.monospaced)
       Spacer()
 
@@ -54,7 +57,7 @@ struct SubtitleRow: View {
             viewModel.useOffset(from: subtitle)
           }).labelsHidden()
         }
-        Text("\(subtitle.startTime.string(adding: subtitle.startOffset)) --> \(subtitle.endTime.string(adding: subtitle.startOffset))")
+        Text("\(subtitle.start.string(adding: subtitle.startOffset)) --> \(subtitle.end.string(adding: subtitle.startOffset))")
           .font(.footnote)
           .fontDesign(.monospaced)
       }
@@ -80,5 +83,5 @@ struct SubtitleRow: View {
 }
 
 #Preview {
-  SubtitleRow(subtitle: .init(id: 1, startTime: .init("00:11:00.101"), endTime: .init("00:11:01.337"), text: "SubRip Resync"), viewModel: .init())
+  SubtitleRow(subtitle: .init(id: 1, start: SRTTime("00:11:00.101"), end: SRTTime("00:11:01.337"), components: []), viewModel: .init())
 }

@@ -18,6 +18,11 @@
 		AC668C1F2AE0C79D0057816A /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC668C1E2AE0C79D0057816A /* Time.swift */; };
 		AC835FF82AE1F0090066E133 /* SubtitleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC835FF72AE1F0090066E133 /* SubtitleRow.swift */; };
 		AC835FFA2AE1F16A0066E133 /* ContentView+DropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */; };
+		ACE07E332AE2E8F10099A2FF /* SRTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E322AE2E8F10099A2FF /* SRTService.swift */; };
+		ACE07E352AE2F2E60099A2FF /* ASSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E342AE2F2E60099A2FF /* ASSService.swift */; };
+		ACE07E372AE2F82B0099A2FF /* SubtitleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */; };
+		ACE07E392AE2FD150099A2FF /* SRTTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E382AE2FD150099A2FF /* SRTTime.swift */; };
+		ACE07E3B2AE2FD200099A2FF /* ASSTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E3A2AE2FD200099A2FF /* ASSTime.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +40,11 @@
 		AC835FF72AE1F0090066E133 /* SubtitleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleRow.swift; sourceTree = "<group>"; };
 		AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+DropDelegate.swift"; sourceTree = "<group>"; };
 		AC835FFB2AE1F8D80066E133 /* AppIcon.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AppIcon.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		ACE07E322AE2E8F10099A2FF /* SRTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRTService.swift; sourceTree = "<group>"; };
+		ACE07E342AE2F2E60099A2FF /* ASSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSService.swift; sourceTree = "<group>"; };
+		ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleService.swift; sourceTree = "<group>"; };
+		ACE07E382AE2FD150099A2FF /* SRTTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRTTime.swift; sourceTree = "<group>"; };
+		ACE07E3A2AE2FD200099A2FF /* ASSTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSTime.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,11 +78,12 @@
 		AC1AE03D2AE0523300952CC4 /* SubRip Resync */ = {
 			isa = PBXGroup;
 			children = (
-				AC1AE0472AE0523400952CC4 /* SubRip_Resync.entitlements */,
-				AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */,
 				AC1AE0422AE0523400952CC4 /* Assets.xcassets */,
 				AC1AE04E2AE052FB00952CC4 /* Model */,
 				AC1AE0442AE0523400952CC4 /* Preview Content */,
+				ACE07E312AE2E8DE0099A2FF /* Services */,
+				AC1AE0472AE0523400952CC4 /* SubRip_Resync.entitlements */,
+				AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */,
 				AC1AE04D2AE052EE00952CC4 /* View */,
 				AC1AE0512AE0532700952CC4 /* ViewModel */,
 			);
@@ -104,6 +115,8 @@
 			children = (
 				AC1AE04F2AE0530600952CC4 /* Subtitle.swift */,
 				AC668C1E2AE0C79D0057816A /* Time.swift */,
+				ACE07E3A2AE2FD200099A2FF /* ASSTime.swift */,
+				ACE07E382AE2FD150099A2FF /* SRTTime.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -114,6 +127,16 @@
 				AC1AE0522AE0533400952CC4 /* ContentViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		ACE07E312AE2E8DE0099A2FF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				ACE07E322AE2E8F10099A2FF /* SRTService.swift */,
+				ACE07E342AE2F2E60099A2FF /* ASSService.swift */,
+				ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,12 +233,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC835FF82AE1F0090066E133 /* SubtitleRow.swift in Sources */,
+				ACE07E332AE2E8F10099A2FF /* SRTService.swift in Sources */,
 				AC1AE0552AE054D800952CC4 /* LogoView.swift in Sources */,
 				AC835FFA2AE1F16A0066E133 /* ContentView+DropDelegate.swift in Sources */,
+				ACE07E3B2AE2FD200099A2FF /* ASSTime.swift in Sources */,
+				ACE07E352AE2F2E60099A2FF /* ASSService.swift in Sources */,
 				AC1AE0532AE0533400952CC4 /* ContentViewModel.swift in Sources */,
 				AC668C1F2AE0C79D0057816A /* Time.swift in Sources */,
+				ACE07E392AE2FD150099A2FF /* SRTTime.swift in Sources */,
 				AC1AE0502AE0530600952CC4 /* Subtitle.swift in Sources */,
 				AC1AE0572AE0739700952CC4 /* DropHereView.swift in Sources */,
+				ACE07E372AE2F82B0099A2FF /* SubtitleService.swift in Sources */,
 				AC1AE0412AE0523300952CC4 /* ContentView.swift in Sources */,
 				AC1AE03F2AE0523300952CC4 /* SubRip_ResyncApp.swift in Sources */,
 			);

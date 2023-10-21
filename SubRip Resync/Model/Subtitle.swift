@@ -10,18 +10,18 @@ import SwiftUI
 class Subtitle: ObservableObject, Identifiable {
 
   let id: Int
-  let startTime: Time
-  let endTime: Time
-  let text: String
+  let start: Time
+  let end: Time
+  let components: [String]
   @Published var startOffset: Double = 0.0
   @Published var endOffset: Double = 0.0
   @Published var useForResync = false
 
-  init(id: Int, startTime: Time, endTime: Time, text: String, offset: Double = 0.0) {
+  init(id: Int, start: Time, end: Time, components: [String], offset: Double = 0.0) {
     self.id = id
-    self.startTime = startTime
-    self.endTime = endTime
-    self.text = text
+    self.start = start
+    self.end = end
+    self.components = components
     self.startOffset = offset
   }
 }
