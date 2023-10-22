@@ -11,6 +11,8 @@ import SwiftUI
 struct SubtitleRow: View {
   @ObservedObject var subtitle: Subtitle
   @ObservedObject var viewModel: ContentViewModel
+  @EnvironmentObject var settings: Settings
+
   @State private var offsetString = ""
   @State private var isTextFieldActive = false
   @State private var isStepperActive = false
@@ -19,12 +21,17 @@ struct SubtitleRow: View {
     HStack {
       VStack(alignment: .leading, spacing: 4) {
         Text("\(subtitle.id)")
-          .font(.footnote)
+          .font(.system(.footnote, design: .monospaced))
         Text(viewModel.subtitleService.printTime(subtitle: subtitle))
-          .fontWeight(.bold)
-        Text(viewModel.subtitleService.printComponents(subtitle: subtitle))
-          .font(.footnote)
-      }.fontDesign(.monospaced)
+          .font(.system(.body, design: .monospaced).bold())
+        if settings.onlyShowText {
+          Text(viewModel.subtitleService.printTextComponents(subtitle: subtitle))
+            .font(.system(.footnote, design: .monospaced))
+        } else {
+          Text(viewModel.subtitleService.printAllComponents(subtitle: subtitle))
+            .font(.system(.footnote, design: .monospaced))
+        }
+      }
       Spacer()
 
       VStack {
@@ -39,7 +46,7 @@ struct SubtitleRow: View {
             }
           })
           .textFieldStyle(RoundedBorderTextFieldStyle())
-          .fontDesign(.monospaced)
+          .font(.system(.body, design: .monospaced))
           .frame(width: 80)
           .onReceive(Just(subtitle.startOffset)) { newValue in
             //        print("onReceive \(subtitle.id) (textfield): \(newValue)")
@@ -58,8 +65,7 @@ struct SubtitleRow: View {
           }).labelsHidden()
         }
         Text("\(subtitle.start.string(adding: subtitle.startOffset)) --> \(subtitle.end.string(adding: subtitle.startOffset))")
-          .font(.footnote)
-          .fontDesign(.monospaced)
+          .font(.system(.footnote, design: .monospaced))
       }
 
       HStack {

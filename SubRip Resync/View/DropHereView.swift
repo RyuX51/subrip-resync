@@ -15,18 +15,22 @@ struct DropHereView: View {
         .frame(width: 100, height: 100)
         .padding()
       Text("Drop subtitle file here")
-        .font(.title)
-        .fontWeight(.bold)
+        .font(.system(.title).bold())
         .padding()
     }
-    .foregroundStyle(Color.cyan)
+    .foregroundColor(Color.white.opacity(0.8))
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color.black.opacity(0.7))
+    .background(
+      ZStack {
+        Color.white
+        Color.black.opacity(0.8)
+      }
+    )
     .overlay(
       RoundedRectangle(cornerRadius: 10)
-        .stroke(Color.cyan, lineWidth: 10)
+        .stroke(Color.blue, lineWidth: 10)
     )
-    .cornerRadius(10)
+    .cornerRadius(8)
   }
 }
 

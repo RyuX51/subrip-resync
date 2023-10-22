@@ -44,8 +44,12 @@ struct SRTService: SubtitleService {
     "\(subtitle.start.stringValue) --> \(subtitle.end.stringValue)"
   }
 
-  func printComponents(subtitle: Subtitle) -> String {
+  func printAllComponents(subtitle: Subtitle) -> String {
     subtitle.components.first ?? ""
+  }
+
+  func printTextComponents(subtitle: Subtitle) -> String {
+    printAllComponents(subtitle: subtitle)
   }
 
   func assemble(from subtitles: [Subtitle]) -> String {

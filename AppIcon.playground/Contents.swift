@@ -83,9 +83,7 @@ struct ContentView: View {
           }
         }
       }
-      .font(.largeTitle)
-      .fontWeight(.black)
-      .fontDesign(.monospaced)
+      .font(.system(.largeTitle, design: .monospaced).bold())
       .foregroundColor(.white)
       .shadow(color: .gray, radius: 10, x: 0, y: 10)
       .minimumScaleFactor(0.1)

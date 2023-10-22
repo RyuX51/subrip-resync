@@ -12,6 +12,10 @@ class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
   @Published var showMoreThanTwoSelectedAlert = false
   @Published var showInvalidFileAlert = false
+  @Published var isListVisible = false
+  @Published var searchText = ""
+  @Published var showSettings = false
+
   var fileName = ""
   var fileExtension = ""
   var active: Set<Int> = []

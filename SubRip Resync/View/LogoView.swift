@@ -10,7 +10,7 @@ import SwiftUI
 struct LogoView: View {
   var body: some View {
     ZStack {
-      LinearGradient(gradient: Gradient(colors: [Color.blue, Color.cyan]), startPoint: .top, endPoint: .bottom)
+      LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.5), Color.blue]), startPoint: .top, endPoint: .bottom)
         .edgesIgnoringSafeArea(.all)
 
       VStack(alignment: .leading) {
@@ -27,9 +27,7 @@ struct LogoView: View {
             .offset(x: 12, y: 12)
         }
       }
-      .font(.largeTitle)
-      .fontWeight(.black)
-      .fontDesign(.monospaced)
+      .font(.system(.largeTitle, design: .monospaced).weight(.black))
       .foregroundColor(.white)
       .shadow(color: .gray, radius: 10, x: 0, y: 10)
       .minimumScaleFactor(0.1)
