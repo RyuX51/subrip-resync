@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
   @StateObject var viewModel = ContentViewModel()
+  @ObservedObject var selectedFile: SelectedFile
 
   var body: some View {
     VStack(spacing: 0) {
@@ -34,6 +35,11 @@ struct ContentView: View {
     }
     .background(Color.blue)
     .onDrop(of: [.fileURL], delegate: self)
+    .onChange(of: selectedFile.url) { newValue in
+      if let url = newValue {
+        viewModel.parseFile(url: url)
+      }
+    }
     .alert(isPresented: $viewModel.showMoreThanTwoSelectedAlert, content: {
       Alert(title: Text("Information"), message: Text("If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result."), dismissButton: .default(Text("OK")))
     })
@@ -108,5 +114,5 @@ struct ContentView: View {
 }
 
 #Preview {
-  ContentView()
+  ContentView(selectedFile: .init())
 }
