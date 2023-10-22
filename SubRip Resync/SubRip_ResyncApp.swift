@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SubRip_ResyncApp: App {
+struct SubRipResyncApp: App {
   @StateObject private var settings = Settings()
 
   var body: some Scene {

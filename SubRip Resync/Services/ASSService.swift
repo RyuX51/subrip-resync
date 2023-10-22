@@ -67,10 +67,8 @@ struct ASSService: SubtitleService {
     self.startIndex = startIndex
     self.endIndex = endIndex
     self.textIndex = textIndex
-    for i in [startIndex, endIndex] {
-      if i < textIndex {
-        self.textIndex -= 1
-      }
+    for i in [startIndex, endIndex] where i < textIndex {
+      self.textIndex -= 1
     }
 
     return true
@@ -121,7 +119,7 @@ struct ASSService: SubtitleService {
   }
 
   func printTextComponents(subtitle: Subtitle) -> String {
-    subtitle.components[textIndex]
+    textIndex < subtitle.components.count ? subtitle.components[textIndex] : ""
   }
 
   func assemble(from subtitles: [Subtitle]) -> String {

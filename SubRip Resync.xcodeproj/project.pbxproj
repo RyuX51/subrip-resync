@@ -20,6 +20,7 @@
 		AC835FFA2AE1F16A0066E133 /* ContentView+DropDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */; };
 		ACA3ECE62AE407F5009CAE45 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3ECE52AE407F5009CAE45 /* Settings.swift */; };
 		ACA3ECE82AE40820009CAE45 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3ECE72AE40820009CAE45 /* SettingsView.swift */; };
+		ACA3ECEF2AE4BF94009CAE45 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACA3ECEE2AE4BF94009CAE45 /* CloseButton.swift */; };
 		ACE07E332AE2E8F10099A2FF /* SRTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E322AE2E8F10099A2FF /* SRTService.swift */; };
 		ACE07E352AE2F2E60099A2FF /* ASSService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E342AE2F2E60099A2FF /* ASSService.swift */; };
 		ACE07E372AE2F82B0099A2FF /* SubtitleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */; };
@@ -44,6 +45,7 @@
 		AC835FFB2AE1F8D80066E133 /* AppIcon.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = AppIcon.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		ACA3ECE52AE407F5009CAE45 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		ACA3ECE72AE40820009CAE45 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		ACA3ECEE2AE4BF94009CAE45 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		ACE07E322AE2E8F10099A2FF /* SRTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SRTService.swift; sourceTree = "<group>"; };
 		ACE07E342AE2F2E60099A2FF /* ASSService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASSService.swift; sourceTree = "<group>"; };
 		ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleService.swift; sourceTree = "<group>"; };
@@ -82,12 +84,12 @@
 		AC1AE03D2AE0523300952CC4 /* SubRip Resync */ = {
 			isa = PBXGroup;
 			children = (
+				AC1AE0472AE0523400952CC4 /* SubRip_Resync.entitlements */,
+				AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */,
 				AC1AE0422AE0523400952CC4 /* Assets.xcassets */,
 				AC1AE04E2AE052FB00952CC4 /* Model */,
 				AC1AE0442AE0523400952CC4 /* Preview Content */,
 				ACE07E312AE2E8DE0099A2FF /* Services */,
-				AC1AE0472AE0523400952CC4 /* SubRip_Resync.entitlements */,
-				AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */,
 				AC1AE04D2AE052EE00952CC4 /* View */,
 				AC1AE0512AE0532700952CC4 /* ViewModel */,
 			);
@@ -105,6 +107,7 @@
 		AC1AE04D2AE052EE00952CC4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ACA3ECEE2AE4BF94009CAE45 /* CloseButton.swift */,
 				AC1AE0402AE0523300952CC4 /* ContentView.swift */,
 				AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */,
 				AC1AE0562AE0739700952CC4 /* DropHereView.swift */,
@@ -229,7 +232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "alias swiftlint=\"/opt/homebrew/bin/swiftlint\"\n\nif swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -244,6 +247,7 @@
 				AC835FFA2AE1F16A0066E133 /* ContentView+DropDelegate.swift in Sources */,
 				ACE07E3B2AE2FD200099A2FF /* ASSTime.swift in Sources */,
 				ACE07E352AE2F2E60099A2FF /* ASSService.swift in Sources */,
+				ACA3ECEF2AE4BF94009CAE45 /* CloseButton.swift in Sources */,
 				AC1AE0532AE0533400952CC4 /* ContentViewModel.swift in Sources */,
 				AC668C1F2AE0C79D0057816A /* Time.swift in Sources */,
 				ACE07E392AE2FD150099A2FF /* SRTTime.swift in Sources */,

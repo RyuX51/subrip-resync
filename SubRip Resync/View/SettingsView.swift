@@ -10,9 +10,10 @@ import SwiftUI
 struct SettingsView: View {
   @EnvironmentObject var settings: Settings
   @Binding var isPresented: Bool
+  @State private var isHovering: Bool = false
 
   var body: some View {
-    ZStack(alignment: .topTrailing) {
+    ZStack(alignment: .topLeading) {
       VStack {
         Text("Settings")
           .font(.title)
@@ -26,21 +27,7 @@ struct SettingsView: View {
         }
       }
       .padding([.bottom, .horizontal])
-
-      Button(action: {
-        isPresented = false
-      }, label: {
-        Image(systemName: "xmark")
-          .font(.headline.bold())
-          .foregroundColor(.white)
-          .padding(.horizontal, 8)
-          .padding(.vertical, 4)
-          .background(
-            Rectangle()
-              .fill(Color.red)
-          )
-      })
-      .buttonStyle(.plain)
+      CloseButton(isPresented: $isPresented)
     }
   }
 }
