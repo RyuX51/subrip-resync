@@ -19,18 +19,20 @@ struct SubtitleRow: View {
 
   var body: some View {
     HStack {
-      VStack(alignment: .leading, spacing: 4) {
-        Text("\(subtitle.id)")
-          .font(.system(.footnote, design: .monospaced))
-        Text(viewModel.subtitleService.printTime(subtitle: subtitle))
-          .font(.system(.body, design: .monospaced).bold())
-        if settings.onlyShowText {
-          Text(viewModel.subtitleService.printTextComponents(subtitle: subtitle))
-            .font(.system(.footnote, design: .monospaced))
-        } else {
-          Text(viewModel.subtitleService.printAllComponents(subtitle: subtitle))
-            .font(.system(.footnote, design: .monospaced))
-        }
+      Text("\(subtitle.id)")
+        .font(.system(.footnote, design: .monospaced))
+        .frame(width: 50)
+      Text(viewModel.subtitleService.printTime(subtitle: subtitle))
+        .font(.system(.body, design: .monospaced))
+        .frame(width: 300)
+      if settings.onlyShowText {
+        Text(viewModel.subtitleService.printTextComponents(subtitle: subtitle))
+          .font(.system(.body, design: .monospaced))
+          .multilineTextAlignment(.leading)
+      } else {
+        Text(viewModel.subtitleService.printAllComponents(subtitle: subtitle))
+          .font(.system(.body, design: .monospaced))
+          .multilineTextAlignment(.leading)
       }
       Spacer()
 
@@ -70,6 +72,7 @@ struct SubtitleRow: View {
         Text("\(subtitle.start.string(adding: subtitle.startOffset)) --> \(subtitle.end.string(adding: subtitle.startOffset))")
           .font(.system(.footnote, design: .monospaced))
       }
+      .frame(width: 200)
 
       HStack {
         if subtitle.useForResync {

@@ -17,6 +17,8 @@ struct ContentView: View {
         LogoView().frame(height: 100)
         DropHereView()
       } else {
+        searchView
+        headerView
         listView
       }
       HStack {
@@ -51,31 +53,53 @@ struct ContentView: View {
     }
   }
 
+  private var searchView: some View {
+    HStack {
+      Image(systemName: "magnifyingglass")
+      TextField("Search", text: $viewModel.searchText)
+        .font(.system(.headline, design: .monospaced))
+    }
+    .padding(8)
+    .background(
+      ZStack {
+        Color.white
+        Color.black.opacity(0.7)
+      }
+    )
+  }
+
+  private var headerView: some View {
+    HStack {
+      Text("")
+        .frame(width: 50)
+      Text("Start --> End  ")
+        .frame(width: 300)
+      Text("Text")
+        .frame(minWidth: 300)
+      Spacer()
+      Text("Offset")
+        .frame(width: 200)
+      Text("")
+        .frame(width: 40)
+    }
+    .font(.system(.headline, design: .monospaced).bold())
+    .padding(8)
+  }
+
   private var listView: some View {
     List {
-      HStack {
-        Image(systemName: "magnifyingglass")
-        TextField("Search", text: $viewModel.searchText)
-          .font(.system(.headline, design: .monospaced))
-      }
-      .padding(8)
-      .background(Color.gray.opacity(0.3))
-      .background(
-        RoundedRectangle(cornerRadius: 8)
-          .stroke(Color.gray, lineWidth: 1)
-      )
       ForEach(viewModel.subtitles.filter { subtitle in
         let text = subtitle.components.joined()
         return viewModel.searchText.isEmpty ? true : text.contains(viewModel.searchText)
       }) { subtitle in
         ZStack {
-          subtitle.useForResync ? Color.gray.opacity(0.2) : Color.clear
+          subtitle.id % 2 == 0 ? Color.blue.opacity(0.2) : Color.clear
+          subtitle.useForResync ? Color.red.opacity(0.2) : Color.clear
           SubtitleRow(subtitle: subtitle, viewModel: viewModel)
-            .padding(6)
         }
       }
     }
-    .listStyle(PlainListStyle())
+    .listStyle(.plain)
   }
 
   private var saveButton: some View {
