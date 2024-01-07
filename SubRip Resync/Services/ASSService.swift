@@ -131,7 +131,7 @@ struct ASSService: SubtitleService {
       var components: [String] = []
       var i = 0
       var j = 0
-      for _ in 0..<format.count + 2 {
+      for _ in 0..<$0.components.count + 2 {
         if i == startIndex {
           components.append(start)
         } else if i == endIndex {
