@@ -72,44 +72,38 @@ struct ContentView: View {
   }
 
   private var saveButton: some View {
-    Button(action: {
-      viewModel.assemble(from: viewModel.subtitles)
-    }, label: {
-      Label("Save \(viewModel.fileExtension.uppercased())", systemImage: "opticaldiscdrive.fill")
-        .font(.system(.title, design: .monospaced).bold())
-        .padding(8)
-        .frame(minWidth: 256)
-    })
-    .buttonStyle(.bordered)
-    .clipShape(.capsule)
-    .padding(8)
+    Label("Save \(viewModel.fileExtension.uppercased())", systemImage: "opticaldiscdrive.fill")
+      .font(.system(.title, design: .monospaced).bold())
+      .padding(8)
+      .frame(minWidth: 256)
+      .onTapGesture {
+        viewModel.assemble(from: viewModel.subtitles)
+      }
+      .background(Capsule().fill(Color.white.opacity(0.5)))
+      .padding(8)
   }
 
   private var convertButton: some View {
-    Button(action: {
-      viewModel.convertToSRT()
-    }, label: {
-      Label("Save as SRT", systemImage: "opticaldiscdrive.fill")
-        .font(.system(.title, design: .monospaced).bold())
-        .padding(8)
-        .frame(minWidth: 256)
-    })
-    .buttonStyle(.bordered)
-    .clipShape(.capsule)
-    .padding(8)
+    Label("Save as SRT", systemImage: "opticaldiscdrive.fill")
+      .font(.system(.title, design: .monospaced).bold())
+      .padding(8)
+      .frame(minWidth: 256)
+      .onTapGesture {
+        viewModel.convertToSRT()
+      }
+      .background(Capsule().fill(Color.white.opacity(0.5)))
+      .padding(8)
   }
 
   private var settingsButton: some View {
-    Button(action: {
-      viewModel.showSettings.toggle()
-    }, label: {
-      Image(systemName: "gearshape.fill")
-        .font(.system(.title, design: .monospaced).bold())
-        .padding(8)
-    })
-    .buttonStyle(.bordered)
-    .clipShape(.circle)
-    .padding(8)
+    Image(systemName: "gearshape.fill")
+      .font(.system(.title, design: .monospaced).bold())
+      .padding(8)
+      .onTapGesture {
+        viewModel.showSettings.toggle()
+      }
+      .background(Circle().fill(Color.white.opacity(0.5)))
+      .padding(8)
   }
 }
 

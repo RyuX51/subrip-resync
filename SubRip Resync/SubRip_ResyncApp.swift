@@ -19,9 +19,9 @@ struct SubRipResyncApp: App {
     }
     .commands {
       CommandGroup(replacing: CommandGroupPlacement.newItem) {
-        Button(action: openFile, label: {
-          Text("Open...")
-        })
+        Button("Open...") {
+          openFile()
+        }
         .keyboardShortcut("o", modifiers: .command)
       }
     }

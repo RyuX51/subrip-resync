@@ -12,24 +12,22 @@ struct CloseButton: View {
   @State private var isHovering: Bool = false
 
   var body: some View {
-    Button(action: {
-      isPresented = false
-    }, label: {
-      ZStack {
-        Circle()
-          .frame(width: 12, height: 12)
-          .foregroundColor(.red)
-          .padding(.horizontal, 8)
-          .padding(.vertical, 8)
+    ZStack {
+      Circle()
+        .frame(width: 12, height: 12)
+        .foregroundColor(.red)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 8)
 
-        if isHovering {
-          Image(systemName: "xmark")
-            .resizable()
-            .frame(width: 6, height: 6)
-            .foregroundColor(.black)
-        }
+      if isHovering {
+        Image(systemName: "xmark")
+          .resizable()
+          .frame(width: 6, height: 6)
+          .foregroundColor(.black)
       }
-    })
+    }.onTapGesture {
+      isPresented = false
+    }
     .buttonStyle(.plain)
     .onHover { hovering in
       isHovering = hovering
