@@ -13,8 +13,8 @@ struct ContentView: View {
 
   var body: some View {
     VStack(spacing: 0) {
-      LogoView().frame(height: 100)
       if viewModel.subtitles.isEmpty {
+        LogoView().frame(height: 100)
         DropHereView()
       } else {
         listView
@@ -53,8 +53,17 @@ struct ContentView: View {
 
   private var listView: some View {
     List {
-      TextField("Search", text: $viewModel.searchText)
-        .padding(8)
+      HStack {
+        Image(systemName: "magnifyingglass")
+        TextField("Search", text: $viewModel.searchText)
+          .font(.system(.headline, design: .monospaced))
+      }
+      .padding(8)
+      .background(Color.gray.opacity(0.3))
+      .background(
+        RoundedRectangle(cornerRadius: 8)
+          .stroke(Color.gray, lineWidth: 1)
+      )
       ForEach(viewModel.subtitles.filter { subtitle in
         let text = subtitle.components.joined()
         return viewModel.searchText.isEmpty ? true : text.contains(viewModel.searchText)
@@ -67,8 +76,6 @@ struct ContentView: View {
       }
     }
     .listStyle(PlainListStyle())
-    .cornerRadius(8)
-    .padding(4)
   }
 
   private var saveButton: some View {
