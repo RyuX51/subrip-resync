@@ -23,6 +23,9 @@ struct SettingsView: View {
             Toggle(isOn: $settings.onlyShowText) {
               Text("Show only text fields")
             }
+            Toggle(isOn: $settings.convertASSLineBreaks) {
+              Text("Convert line breaks")
+            }
           }
         }
       }

@@ -78,7 +78,7 @@ struct ASSService: SubtitleService {
     var subtitles: [Subtitle] = []
     var i = 1
     for line in lines {
-      let lineParts = line.components(separatedBy: ",")
+      let lineParts = line.replacingOccurrences(of: "\\N", with: ",").components(separatedBy: ",")
       guard lineParts.count > 2 else { continue }
       let start = ASSTime(lineParts[startIndex])
       let end = ASSTime(lineParts[endIndex])

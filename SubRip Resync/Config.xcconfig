@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  SubRip Resync
+//
+//  Created by Mario Stief on 07.01.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+VERSION = 1.0
+BUILD_NUMBER = 20240107.1

@@ -40,6 +40,8 @@
 		AC1AE0522AE0533400952CC4 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		AC1AE0542AE054D800952CC4 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		AC1AE0562AE0739700952CC4 /* DropHereView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropHereView.swift; sourceTree = "<group>"; };
+		AC3EF1BB2B4AEC400095BFB7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		AC3EF1BD2B4AF0010095BFB7 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
 		AC668C1E2AE0C79D0057816A /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		AC835FF72AE1F0090066E133 /* SubtitleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleRow.swift; sourceTree = "<group>"; };
 		AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView+DropDelegate.swift"; sourceTree = "<group>"; };
@@ -87,8 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				AC1AE0472AE0523400952CC4 /* SubRip_Resync.entitlements */,
+				AC3EF1BD2B4AF0010095BFB7 /* version.sh */,
 				AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */,
 				AC1AE0422AE0523400952CC4 /* Assets.xcassets */,
+				AC3EF1BB2B4AEC400095BFB7 /* Config.xcconfig */,
 				AC1AE04E2AE052FB00952CC4 /* Model */,
 				AC1AE0442AE0523400952CC4 /* Preview Content */,
 				ACE07E312AE2E8DE0099A2FF /* Services */,
@@ -180,7 +184,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					AC1AE03A2AE0523300952CC4 = {
 						CreatedOnToolsVersion = 15.0;
@@ -302,6 +306,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -364,6 +369,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -386,6 +392,7 @@
 		};
 		AC1AE04B2AE0523400952CC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC3EF1BB2B4AEC400095BFB7 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -394,7 +401,8 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SubRip Resync/Preview Content\"";
 				DEVELOPMENT_TEAM = 67F5SYZYS2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -407,7 +415,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.ryux51.subrip-resync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -417,6 +425,7 @@
 		};
 		AC1AE04C2AE0523400952CC4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC3EF1BB2B4AEC400095BFB7 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -425,7 +434,8 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(BUILD_NUMBER)";
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"SubRip Resync/Preview Content\"";
 				DEVELOPMENT_TEAM = 67F5SYZYS2;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -438,7 +448,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = "net.ryux51.subrip-resync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

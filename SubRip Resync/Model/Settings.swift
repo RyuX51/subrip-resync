@@ -14,8 +14,14 @@ class Settings: ObservableObject {
       UserDefaults.standard.set(onlyShowText, forKey: "onlyShowText")
     }
   }
+  @Published var convertASSLineBreaks: Bool {
+    didSet {
+      UserDefaults.standard.set(convertASSLineBreaks, forKey: "convertASSLineBreaks")
+    }
+  }
 
   init() {
     self.onlyShowText = UserDefaults.standard.bool(forKey: "onlyShowText")
+    self.convertASSLineBreaks = UserDefaults.standard.bool(forKey: "convertASSLineBreaks")
   }
 }
