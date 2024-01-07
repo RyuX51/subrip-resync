@@ -9,13 +9,15 @@ import SwiftUI
 
 struct ASSService: SubtitleService {
 
-  @EnvironmentObject var settings: Settings
   private var startIndex: Int = -1
   private var endIndex: Int = -1
   private var textIndex: Int = -1
   private var textBeforeEvents: String = ""
   private var textAfterEvents: String = ""
   private var format: [String] = []
+  private var noLineBreaks: Bool {
+    UserDefaults.standard.bool(forKey: "noLineBreaks")
+  }
 
   mutating func parseFile(url: URL, completion: (String, [Subtitle]) -> Void) {
     let fileName = url.deletingPathExtension().lastPathComponent
@@ -78,7 +80,10 @@ struct ASSService: SubtitleService {
     var subtitles: [Subtitle] = []
     var i = 1
     for line in lines {
-      let lineParts = line.replacingOccurrences(of: "\\N", with: ",").components(separatedBy: ",")
+      // Regular expression pattern to match \\n or \\N
+      let processedLine = noLineBreaks ? line : line.replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
+      let lineParts = processedLine.components(separatedBy: ",")
+
       guard lineParts.count > 2 else { continue }
       let start = ASSTime(lineParts[startIndex])
       let end = ASSTime(lineParts[endIndex])
@@ -98,17 +103,6 @@ struct ASSService: SubtitleService {
 
   func printTime(subtitle: Subtitle) -> String {
     "\(subtitle.start.stringValue) --> \(subtitle.end.stringValue)"
-  }
-
-  func printComponents(subtitle: Subtitle) -> String {
-    if settings.onlyShowText, subtitle.components.count > textIndex {
-      return subtitle.components[textIndex]
-    } else {
-      return zip(format, subtitle.components).compactMap {
-        guard !$1.isEmpty else { return nil }
-        return $0 + ": " + $1
-      }.joined(separator: "\n")
-    }
   }
 
   func printAllComponents(subtitle: Subtitle) -> String {
