@@ -108,6 +108,7 @@ class ContentViewModel: ObservableObject {
       let offset = filtered.first!.startOffset
       for subtitle in subtitles where subtitle.id != filtered.first!.id {
         subtitle.startOffset = offset
+        subtitle.endOffset = offset
       }
       objectWillChange.send()
     default:

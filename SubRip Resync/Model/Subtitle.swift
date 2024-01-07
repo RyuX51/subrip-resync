@@ -23,6 +23,7 @@ class Subtitle: ObservableObject, Identifiable {
     self.end = end
     self.components = components
     self.startOffset = offset
+    self.endOffset = offset
   }
 }
 

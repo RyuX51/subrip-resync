@@ -42,6 +42,7 @@ struct SubtitleRow: View {
           }, onCommit: {
             if let newOffset = Double(offsetString.replacingOccurrences(of: ",", with: ".")) {
               subtitle.startOffset = newOffset
+              subtitle.endOffset = newOffset
               viewModel.useOffset(from: subtitle)
             }
           })
@@ -54,13 +55,15 @@ struct SubtitleRow: View {
               offsetString = String(round(newValue * 10) / 10)
             }
           }
-          Text("ms")
+          Text("s")
 
           Stepper("", onIncrement: {
             subtitle.startOffset += 0.1
+            subtitle.endOffset += 0.1
             viewModel.useOffset(from: subtitle)
           }, onDecrement: {
             subtitle.startOffset -= 0.1
+            subtitle.endOffset -= 0.1
             viewModel.useOffset(from: subtitle)
           }).labelsHidden()
         }
