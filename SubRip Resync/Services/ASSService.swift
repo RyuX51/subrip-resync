@@ -82,7 +82,17 @@ struct ASSService: SubtitleService {
     for line in lines {
       // Regular expression pattern to match \\n or \\N
       let processedLine = noLineBreaks ? line : line.replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
-      let lineParts = processedLine.components(separatedBy: ",")
+
+      // if the text part of the string has grammatical comma, we need to keep them in the text
+      let lineParts: [String]
+      let lineComponents = processedLine.components(separatedBy: ",")
+      if lineComponents.count > format.count + 2 {
+        let firstParts = lineComponents[0..<(format.count + 1)]
+        let remainingPart = lineComponents[(format.count + 1)...].joined(separator: ",")
+        lineParts = firstParts + [remainingPart]
+      } else {
+        lineParts = lineComponents
+      }
 
       guard lineParts.count > 2 else { continue }
       let start = ASSTime(lineParts[startIndex])
@@ -113,7 +123,7 @@ struct ASSService: SubtitleService {
   }
 
   func printTextComponents(subtitle: Subtitle) -> String {
-    textIndex < subtitle.components.count ? subtitle.components[textIndex] : ""
+    textIndex < subtitle.components.count ? subtitle.components.suffix(from: textIndex).joined() : ""
   }
 
   func assemble(from subtitles: [Subtitle]) -> String {
@@ -147,7 +157,7 @@ struct ASSService: SubtitleService {
     let srtSubs: [Subtitle] = assSubs.compactMap {
       let startTime = SRTTime($0.start.string(adding: 0))
       let endTime = SRTTime($0.end.string(adding: 0))
-      let components: [String] = [$0.components[textIndex]]
+      let components: [String] = Array($0.components.suffix(from: textIndex))
       return Subtitle(id: $0.id, start: startTime, end: endTime, components: components)
     }
     return srtSubs

@@ -76,7 +76,6 @@ class ContentViewModel: ObservableObject {
         }
       }
     }
-
   }
 
   func useOffset(from subtitle: Subtitle) {

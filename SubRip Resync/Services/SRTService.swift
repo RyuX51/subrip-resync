@@ -52,7 +52,7 @@ struct SRTService: SubtitleService {
   }
 
   func printAllComponents(subtitle: Subtitle) -> String {
-    subtitle.components.first ?? ""
+    subtitle.components.joined()
   }
 
   func printTextComponents(subtitle: Subtitle) -> String {
@@ -63,7 +63,7 @@ struct SRTService: SubtitleService {
     subtitles.map {
       let start = $0.start.string(adding: $0.startOffset)
       let end = $0.end.string(adding: $0.endOffset)
-      let text = $0.components.first ?? ""
+      let text = $0.components.joined()
       return "\($0.id)\n\(start) --> \(end)\n\(text)"
     }.joined(separator: "\n\n")
   }

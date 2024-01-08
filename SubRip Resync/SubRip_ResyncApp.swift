@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SubRipResyncApp: App {
+  @StateObject var viewModel = AppViewModel()
   @StateObject private var settings = Settings()
   @StateObject var selectedFile = SelectedFile()
 
@@ -24,6 +25,17 @@ struct SubRipResyncApp: App {
         }
         .keyboardShortcut("o", modifiers: .command)
       }
+      //      CommandGroup(replacing: .saveItem) {
+      //        Button("Save ASS...") {
+      //          viewModel.saveASS()
+      //        }
+      //        .disabled(!viewModel.isSaveEnabled) // Disable based on your condition
+      //
+      //        Button("Save as SRT...") {
+      //          viewModel.saveSRT()
+      //        }
+      //        .disabled(!viewModel.isSaveEnabled) // Disable based on your condition
+      //      }
     }
   }
 
