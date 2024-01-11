@@ -85,33 +85,37 @@ class ContentViewModel: ObservableObject {
     subtitle.useForResync = true
     active.insert(subtitle.id)
     updateOffsets()
-    objectWillChange.send()
   }
 
   func removeOffset(subtitle: Subtitle) {
     subtitle.useForResync = false
     active.remove(subtitle.id)
     updateOffsets()
-    objectWillChange.send()
   }
 
   func updateOffsets() {
-    let filtered = subtitles
-      .filter { $0.useForResync }
+    DispatchQueue.global(qos: .userInitiated).async {
+      let filtered = self.subtitles
+        .filter { $0.useForResync }
 
-    switch filtered.count {
-    case 0:
-      return
-    case 1:
-      // only shift offset
-      let offset = filtered.first!.startOffset
-      for subtitle in subtitles where subtitle.id != filtered.first!.id {
-        subtitle.startOffset = offset
-        subtitle.endOffset = offset
+      switch filtered.count {
+      case 0:
+        return
+      case 1:
+        // only shift offset
+        let offset = filtered.first!.startOffset
+        for subtitle in self.subtitles where subtitle.id != filtered.first!.id {
+          DispatchQueue.main.async {
+            subtitle.startOffset = offset
+            subtitle.endOffset = offset
+          }
+        }
+      default:
+        self.linearTransformation(selected: filtered)
       }
-      objectWillChange.send()
-    default:
-      linearTransformation(selected: filtered)
+      DispatchQueue.main.async {
+        self.objectWillChange.send()
+      }
     }
   }
 
