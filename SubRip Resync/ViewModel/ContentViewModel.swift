@@ -131,8 +131,10 @@ class ContentViewModel: ObservableObject {
     let offsetOverTime = (lastOffset - firstOffset) / (lastStartTime - firstStartTime)
 
     for subtitle in subtitles {
-      subtitle.startOffset = (subtitle.start.doubleValue - firstStartTime) * offsetOverTime + firstOffset
-      subtitle.endOffset = (subtitle.end.doubleValue - firstStartTime) * offsetOverTime + firstOffset
+      DispatchQueue.main.async {
+        subtitle.startOffset = (subtitle.start.doubleValue - firstStartTime) * offsetOverTime + firstOffset
+        subtitle.endOffset = (subtitle.end.doubleValue - firstStartTime) * offsetOverTime + firstOffset
+      }
     }
   }
 }
