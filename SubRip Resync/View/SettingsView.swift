@@ -19,16 +19,12 @@ struct SettingsView: View {
           .font(.title)
           .padding()
         Form {
-          Section(header: Text("Global").font(.headline.bold())) {
-            Toggle(isOn: $settings.noLineBreaks) {
-              Text("Don't convert \\N into line breaks")
-            }
-          }
-          Section(header: Text("ASS").padding(.top, 4).font(.headline.bold())) {
+          Section(header: Text("ASS").font(.headline.bold())) {
             Toggle(isOn: $settings.onlyShowText) {
               Text("Show only text fields")
             }
           }
+          // for other sections use .padding(.top, 4) on the Text
         }
       }
       .padding([.bottom, .horizontal])

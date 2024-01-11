@@ -15,9 +15,6 @@ struct ASSService: SubtitleService {
   private var textBeforeEvents: String = ""
   private var textAfterEvents: String = ""
   private var format: [String] = []
-  private var noLineBreaks: Bool {
-    UserDefaults.standard.bool(forKey: "noLineBreaks")
-  }
 
   mutating func parseFile(url: URL, completion: (String, [Subtitle]) -> Void) {
     let fileName = url.deletingPathExtension().lastPathComponent
@@ -80,12 +77,9 @@ struct ASSService: SubtitleService {
     var subtitles: [Subtitle] = []
     var i = 1
     for line in lines {
-      // Regular expression pattern to match \\n or \\N
-      let processedLine = noLineBreaks ? line : line.replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
-
       // if the text part of the string has grammatical comma, we need to keep them in the text
       let lineParts: [String]
-      let lineComponents = processedLine.components(separatedBy: ",")
+      let lineComponents = line.components(separatedBy: ",")
       if lineComponents.count > format.count + 2 {
         let firstParts = lineComponents[0..<(format.count + 1)]
         let remainingPart = lineComponents[(format.count + 1)...].joined(separator: ",")

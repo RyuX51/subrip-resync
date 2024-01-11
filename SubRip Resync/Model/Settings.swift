@@ -14,14 +14,8 @@ class Settings: ObservableObject {
       UserDefaults.standard.set(onlyShowText, forKey: "onlyShowText")
     }
   }
-  @Published var noLineBreaks: Bool {
-    didSet {
-      UserDefaults.standard.set(noLineBreaks, forKey: "noLineBreaks")
-    }
-  }
 
   init() {
     self.onlyShowText = UserDefaults.standard.bool(forKey: "onlyShowText")
-    self.noLineBreaks = UserDefaults.standard.bool(forKey: "noLineBreaks")
   }
 }

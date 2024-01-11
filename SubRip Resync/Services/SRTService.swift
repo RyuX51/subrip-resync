@@ -9,10 +9,6 @@ import SwiftUI
 
 struct SRTService: SubtitleService {
 
-  private var noLineBreaks: Bool {
-    UserDefaults.standard.bool(forKey: "noLineBreaks")
-  }
-
   mutating func parseFile(url: URL, completion: (String, [Subtitle]) -> Void) {
     let fileName = url.deletingPathExtension().lastPathComponent
     do {
@@ -30,10 +26,7 @@ struct SRTService: SubtitleService {
     var subtitles: [Subtitle] = []
 
     for line in lines {
-      // Regular expression pattern to match \\n or \\N
-      let processedLine = noLineBreaks ? line : line.replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
-
-      let components = processedLine.components(separatedBy: "\n")
+      let components = line.components(separatedBy: "\n")
       if components.count >= 3,
          let index = Int(components[0]),
          let range = components[1].range(of: " --> ") {
