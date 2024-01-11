@@ -45,7 +45,10 @@ struct SRTService: SubtitleService {
   }
 
   func printAllComponents(subtitle: Subtitle) -> String {
-    subtitle.components.joined()
+    subtitle
+      .components
+      .joined()
+      .replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
   }
 
   func printTextComponents(subtitle: Subtitle) -> String {

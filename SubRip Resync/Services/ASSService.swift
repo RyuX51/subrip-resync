@@ -113,11 +113,18 @@ struct ASSService: SubtitleService {
     zip(format, subtitle.components).compactMap {
       guard !$1.isEmpty else { return nil }
       return $0 + ": " + $1
-    }.joined(separator: "\n")
+    }
+    .joined(separator: "\n")
+    .replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
   }
 
   func printTextComponents(subtitle: Subtitle) -> String {
-    textIndex < subtitle.components.count ? subtitle.components.suffix(from: textIndex).joined() : ""
+    textIndex < subtitle.components.count ? subtitle
+      .components
+      .suffix(from: textIndex)
+      .joined()
+      .replacingOccurrences(of: "\\\\[nN]", with: "\n", options: .regularExpression, range: nil)
+      : ""
   }
 
   func assemble(from subtitles: [Subtitle]) -> String {
