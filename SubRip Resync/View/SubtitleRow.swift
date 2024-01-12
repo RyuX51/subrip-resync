@@ -38,35 +38,55 @@ struct SubtitleRow: View {
 
       VStack {
         HStack {
-          Text("Offset:")
-          TextField("Offset", text: $offsetString, onEditingChanged: { editing in
-            isTextFieldActive = editing
-          }, onCommit: {
-            if let newOffset = Double(offsetString.replacingOccurrences(of: ",", with: ".")) {
-              subtitle.startOffset = newOffset
-              subtitle.endOffset = newOffset
-              viewModel.useOffset(from: subtitle)
+          ResponderTextField(
+            text: $offsetString,
+            isFirstResponder: isTextFieldActive,
+            onEditingChanged: { _ in
+              viewModel.useOffset(from: subtitle) {}
+            },
+            onCommit: {
+              if let newOffset = Double(offsetString.replacingOccurrences(of: ",", with: ".")) {
+                if abs(newOffset - subtitle.startOffset) > 0.01 {
+                  subtitle.startOffset = newOffset
+                  subtitle.endOffset = newOffset
+                  subtitle.useForResync = true
+                  viewModel.objectWillChange.send()
+                }
+              }
+            })
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .font(.system(.body, design: .monospaced))
+            .frame(width: 80)
+            .onReceive(Just(subtitle.startOffset)) { newValue in
+              if !isTextFieldActive {
+                offsetString = String(round(newValue * 10) / 10)
+              }
             }
-          })
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-          .font(.system(.body, design: .monospaced))
-          .frame(width: 80)
-          .onReceive(Just(subtitle.startOffset)) { newValue in
-            //        print("onReceive \(subtitle.id) (textfield): \(newValue)")
-            if !isTextFieldActive {
-              offsetString = String(round(newValue * 10) / 10)
+            .onChange(of: isTextFieldActive) {
+              print("isTextFieldActive: \($0)")
             }
-          }
           Text("s")
 
           Stepper("", onIncrement: {
+            isTextFieldActive = false
             subtitle.startOffset += 0.1
             subtitle.endOffset += 0.1
-            viewModel.useOffset(from: subtitle)
+            viewModel.useOffset(from: subtitle) {
+              DispatchQueue.main.async {
+                subtitle.useForResync = true
+                viewModel.objectWillChange.send()
+              }
+            }
           }, onDecrement: {
+            isTextFieldActive = false
             subtitle.startOffset -= 0.1
             subtitle.endOffset -= 0.1
-            viewModel.useOffset(from: subtitle)
+            viewModel.useOffset(from: subtitle) {
+              DispatchQueue.main.async {
+                subtitle.useForResync = true
+                viewModel.objectWillChange.send()
+              }
+            }
           }).labelsHidden()
         }
         Text("\(subtitle.start.string(adding: subtitle.startOffset)) --> \(subtitle.end.string(adding: subtitle.startOffset))")
@@ -77,7 +97,11 @@ struct SubtitleRow: View {
       HStack {
         if subtitle.useForResync {
           Button {
-            viewModel.removeOffset(subtitle: subtitle)
+            viewModel.removeOffset(subtitle: subtitle) {
+              DispatchQueue.main.async {
+                viewModel.objectWillChange.send()
+              }
+            }
           } label: {
             Image(systemName: "x.circle.fill")
               .resizable()

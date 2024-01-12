@@ -8,28 +8,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct AlertInfo: Identifiable {
-
-  enum AlertType {
-    case info
-    case error
-  }
-
-  let id: AlertType
-  var title: String {
-    switch id {
-    case .info: return "Information"
-    case .error: return "Error"
-    }
-  }
-  let message: String
-
-  init(_ id: AlertType, message: String) {
-    self.id = id
-    self.message = message
-  }
-}
-
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
   @Published var alertInfo: AlertInfo?
@@ -41,6 +19,7 @@ class ContentViewModel: ObservableObject {
   var fileExtension = ""
   var active: Set<Int> = []
   var subtitleService: SubtitleService!
+  var keyDownMonitor: Any?
 
   func parseFile(url: URL) {
     let fileExtension = url.pathExtension
@@ -62,6 +41,7 @@ class ContentViewModel: ObservableObject {
         self.fileName = fileName
         self.fileExtension = fileExtension
         self.subtitles = subtitles
+        self.enableKeyDownMonitor()
       }, failure: {
         alertInfo = .init(.info, message: "The file could not be read or is empty. Did you use a valid subtitle file?")
       })
@@ -105,23 +85,27 @@ class ContentViewModel: ObservableObject {
     }
   }
 
-  func useOffset(from subtitle: Subtitle) {
+  func useOffset(from subtitle: Subtitle, completion: @escaping () -> Void) {
     if active.count == 2 && !active.contains(subtitle.id) {
       alertInfo = .init(.info, message: "If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result.")
     }
-    subtitle.useForResync = true
     active.insert(subtitle.id)
-    updateOffsets()
+    updateOffsets(ignore: subtitle, completion: completion)
   }
 
-  func removeOffset(subtitle: Subtitle) {
+  func removeOffset(subtitle: Subtitle, completion: @escaping () -> Void) {
     subtitle.useForResync = false
     active.remove(subtitle.id)
-    updateOffsets()
+    updateOffsets(completion: completion)
   }
 
-  func updateOffsets() {
-    DispatchQueue.global(qos: .userInitiated).async {
+  func updateOffsets(ignore: Subtitle? = nil, completion: @escaping () -> Void) {
+    DispatchQueue.global(qos: .userInteractive).async {
+
+      defer {
+        completion()
+      }
+
       let filtered = self.subtitles
         .filter { $0.useForResync }
 
@@ -131,22 +115,19 @@ class ContentViewModel: ObservableObject {
       case 1:
         // only shift offset
         let offset = filtered.first!.startOffset
-        for subtitle in self.subtitles where subtitle.id != filtered.first!.id {
+        for subtitle in self.subtitles where subtitle.id != filtered.first!.id && subtitle.id != ignore?.id {
           DispatchQueue.main.async {
             subtitle.startOffset = offset
             subtitle.endOffset = offset
           }
         }
       default:
-        self.linearTransformation(selected: filtered)
-      }
-      DispatchQueue.main.async {
-        self.objectWillChange.send()
+        self.linearTransformation(ignore: ignore, selected: filtered)
       }
     }
   }
 
-  private func linearTransformation(selected: [Subtitle]) {
+  private func linearTransformation(ignore: Subtitle? = nil, selected: [Subtitle]) {
     let sorted = selected.sorted()
     guard let first = sorted.first,
           let last = sorted.last else { return }
@@ -157,11 +138,29 @@ class ContentViewModel: ObservableObject {
     let lastOffset = last.startOffset
     let offsetOverTime = (lastOffset - firstOffset) / (lastStartTime - firstStartTime)
 
-    for subtitle in subtitles {
+    for subtitle in subtitles where subtitle.id != ignore?.id {
       DispatchQueue.main.async {
         subtitle.startOffset = (subtitle.start.doubleValue - firstStartTime) * offsetOverTime + firstOffset
         subtitle.endOffset = (subtitle.end.doubleValue - firstStartTime) * offsetOverTime + firstOffset
       }
     }
+  }
+
+  private func enableKeyDownMonitor() {
+    keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event -> NSEvent? in
+      switch event.keyCode {
+      case 126: // Arrow up key code
+        print("arrow up pressed")
+      case 125: // Arrow down key code
+        print("arrow down pressed")
+      default:
+        break
+      }
+      return event
+    }
+  }
+
+  private func disableKeyDownMonitor() {
+    keyDownMonitor = nil
   }
 }
