@@ -42,11 +42,10 @@ struct ContentView: View {
         viewModel.parseFile(url: url)
       }
     }
-    .alert(isPresented: $viewModel.showMoreThanTwoSelectedAlert, content: {
-      Alert(title: Text("Information"), message: Text("If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result."), dismissButton: .default(Text("OK")))
-    })
-    .alert(isPresented: $viewModel.showInvalidFileAlert, content: {
-      Alert(title: Text("Error"), message: Text("This version supports SRT and ASS files."), dismissButton: .default(Text("OK")))
+    .alert(item: $viewModel.alertInfo, content: {
+      Alert(title: Text($0.title),
+            message: Text($0.message),
+            dismissButton: .default(Text("OK")))
     })
     .sheet(isPresented: $viewModel.showSettings) {
       SettingsView(isPresented: $viewModel.showSettings)

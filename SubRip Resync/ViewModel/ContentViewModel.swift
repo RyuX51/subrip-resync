@@ -8,10 +8,31 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+struct AlertInfo: Identifiable {
+
+  enum AlertType {
+    case info
+    case error
+  }
+
+  let id: AlertType
+  var title: String {
+    switch id {
+    case .info: return "Information"
+    case .error: return "Error"
+    }
+  }
+  let message: String
+
+  init(_ id: AlertType, message: String) {
+    self.id = id
+    self.message = message
+  }
+}
+
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
-  @Published var showMoreThanTwoSelectedAlert = false
-  @Published var showInvalidFileAlert = false
+  @Published var alertInfo: AlertInfo?
   @Published var isListVisible = false
   @Published var searchText = ""
   @Published var showSettings = false
@@ -22,22 +43,28 @@ class ContentViewModel: ObservableObject {
   var subtitleService: SubtitleService!
 
   func parseFile(url: URL) {
-    fileExtension = url.pathExtension
+    let fileExtension = url.pathExtension
+    var subtitleService: SubtitleService
     switch fileExtension {
     case "srt":
       subtitleService = SRTService()
     case "ass":
       subtitleService = ASSService()
     default:
-      showInvalidFileAlert = true
+      alertInfo = .init(.info, message: "This version supports SRT and ASS files only.")
       return
     }
 
-    subtitleService.parseFile(url: url) { fileName, subtitles in
-      self.fileName = fileName
-      self.fileExtension = fileExtension
-      self.subtitles = subtitles
-    }
+    subtitleService.parseFile(
+      url: url,
+      completion: { fileName, subtitles, service in
+        self.subtitleService = service
+        self.fileName = fileName
+        self.fileExtension = fileExtension
+        self.subtitles = subtitles
+      }, failure: {
+        alertInfo = .init(.info, message: "The file could not be read or is empty. Did you use a valid subtitle file?")
+      })
   }
 
   func convertToSRT() {
@@ -80,7 +107,7 @@ class ContentViewModel: ObservableObject {
 
   func useOffset(from subtitle: Subtitle) {
     if active.count == 2 && !active.contains(subtitle.id) {
-      showMoreThanTwoSelectedAlert = true
+      alertInfo = .init(.info, message: "If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result.")
     }
     subtitle.useForResync = true
     active.insert(subtitle.id)

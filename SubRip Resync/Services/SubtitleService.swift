@@ -9,7 +9,7 @@ import SwiftUI
 
 protocol SubtitleService {
 
-  mutating func parseFile(url: URL, completion: (String, [Subtitle]) -> Void)
+  mutating func parseFile(url: URL, completion: (String, [Subtitle], SubtitleService) -> Void, failure: () -> Void)
   mutating func parseSubtitles(_ str: String) -> [Subtitle]
   func printTime(subtitle: Subtitle) -> String
   func printAllComponents(subtitle: Subtitle) -> String

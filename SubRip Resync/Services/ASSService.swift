@@ -16,12 +16,16 @@ struct ASSService: SubtitleService {
   private var textAfterEvents: String = ""
   private var format: [String] = []
 
-  mutating func parseFile(url: URL, completion: (String, [Subtitle]) -> Void) {
+  mutating func parseFile(url: URL, completion: (String, [Subtitle], SubtitleService) -> Void, failure: () -> Void) {
     let fileName = url.deletingPathExtension().lastPathComponent
     do {
       let data = try Data(contentsOf: url)
       let str = String(data: data, encoding: .utf8) ?? ""
-      completion(fileName, parseSubtitles(str))
+      guard !str.isEmpty else {
+        failure()
+        return
+      }
+      completion(fileName, parseSubtitles(str), self)
     } catch {
       print("Error: \(error)")
     }
