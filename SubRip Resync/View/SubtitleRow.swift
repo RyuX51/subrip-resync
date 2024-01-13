@@ -49,8 +49,10 @@ struct SubtitleRow: View {
                 if abs(newOffset - subtitle.startOffset) > 0.01 {
                   subtitle.startOffset = newOffset
                   subtitle.endOffset = newOffset
-                  subtitle.useForResync = true
-                  viewModel.objectWillChange.send()
+                  withAnimation {
+                    subtitle.useForResync = true
+                    viewModel.objectWillChange.send()
+                  }
                 }
               }
             })
@@ -91,8 +93,10 @@ struct SubtitleRow: View {
             viewModel.updateOffsetString = nil
             viewModel.useOffset(from: subtitle) {
               DispatchQueue.main.async {
-                subtitle.useForResync = true
-                viewModel.objectWillChange.send()
+                withAnimation {
+                  subtitle.useForResync = true
+                  viewModel.objectWillChange.send()
+                }
               }
             }
           }, onDecrement: {
@@ -103,8 +107,10 @@ struct SubtitleRow: View {
             viewModel.updateOffsetString = nil
             viewModel.useOffset(from: subtitle) {
               DispatchQueue.main.async {
-                subtitle.useForResync = true
-                viewModel.objectWillChange.send()
+                withAnimation {
+                  subtitle.useForResync = true
+                  viewModel.objectWillChange.send()
+                }
               }
             }
           }).labelsHidden()

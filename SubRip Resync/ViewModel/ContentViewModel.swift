@@ -107,7 +107,9 @@ class ContentViewModel: ObservableObject {
   }
 
   func removeOffset(subtitle: Subtitle, completion: @escaping () -> Void) {
-    subtitle.useForResync = false
+    withAnimation {
+      subtitle.useForResync = false
+    }
     active.remove(subtitle.id)
     updateOffsets(completion: completion)
   }
@@ -171,8 +173,10 @@ class ContentViewModel: ObservableObject {
         self?.updateOffsetString?()
         self?.useOffset(from: subtitle) {
           DispatchQueue.main.async {
-            subtitle.useForResync = true
-            self?.objectWillChange.send()
+            withAnimation {
+              subtitle.useForResync = true
+              self?.objectWillChange.send()
+            }
           }
         }
       case 125: // Arrow down key code
@@ -181,8 +185,10 @@ class ContentViewModel: ObservableObject {
         self?.updateOffsetString?()
         self?.useOffset(from: subtitle) {
           DispatchQueue.main.async {
-            subtitle.useForResync = true
-            self?.objectWillChange.send()
+            withAnimation {
+              subtitle.useForResync = true
+              self?.objectWillChange.send()
+            }
           }
         }
       default:
