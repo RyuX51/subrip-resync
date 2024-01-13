@@ -40,7 +40,7 @@ struct SubtitleRow: View {
         HStack {
           ResponderTextField(
             text: $offsetString,
-            isFirstResponder: isTextFieldActive,
+            isFirstResponder: $isTextFieldActive,
             onEditingChanged: { _ in
               viewModel.useOffset(from: subtitle) {}
             },
@@ -62,9 +62,10 @@ struct SubtitleRow: View {
                 offsetString = String(round(newValue * 10) / 10)
               }
             }
-            .onChange(of: isTextFieldActive) {
-              print("isTextFieldActive: \($0)")
-            }
+          //            .onChange(of: isTextFieldActive) {
+          //              print("isTextFieldActive: \($0)")
+          //            }
+
           Text("s")
 
           Stepper("", onIncrement: {

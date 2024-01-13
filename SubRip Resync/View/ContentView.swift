@@ -18,6 +18,9 @@ struct ContentView: View {
         DropHereView()
       } else {
         searchView
+        if viewModel.warningMessage != nil {
+          warningView
+        }
         headerView
         listView
       }
@@ -63,6 +66,25 @@ struct ContentView: View {
       ZStack {
         Color.white
         Color.black.opacity(0.7)
+      }
+    )
+  }
+
+  private var warningView: some View {
+    HStack {
+      Spacer()
+      Image(systemName: "exclamationmark.triangle.fill")
+      Text(viewModel.warningMessage!)
+        .font(.system(.caption2, design: .monospaced))
+        .foregroundColor(.white)
+        .padding(4)
+      Image(systemName: "exclamationmark.triangle.fill")
+      Spacer()
+    }
+    .background(
+      ZStack {
+        Color.red
+        Color.black.opacity(0.5)
       }
     )
   }

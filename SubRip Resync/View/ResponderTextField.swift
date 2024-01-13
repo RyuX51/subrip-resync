@@ -5,11 +5,32 @@
 //  Created by Mario Stief on 12.01.24.
 //
 
+import AppKit
 import SwiftUI
+
+class FocusAwareTextField: NSTextField {
+  var onFocusChange: (Bool) -> Void = { _ in }
+
+  override func becomeFirstResponder() -> Bool {
+    let result = super.becomeFirstResponder()
+    if result {
+      onFocusChange(true)
+    }
+    return result
+  }
+
+  override func resignFirstResponder() -> Bool {
+    let result = super.resignFirstResponder()
+    if result {
+      onFocusChange(false)
+    }
+    return result
+  }
+}
 
 struct ResponderTextField: NSViewRepresentable {
   @Binding var text: String
-  var isFirstResponder: Bool = false
+  @Binding var isFirstResponder: Bool
   var onEditingChanged: (Bool) -> Void
   var onCommit: () -> Void
 
@@ -18,19 +39,6 @@ struct ResponderTextField: NSViewRepresentable {
 
     init(_ parent: ResponderTextField) {
       self.parent = parent
-    }
-
-    func controlTextDidBeginEditing(_ obj: Notification) {
-      DispatchQueue.main.async {
-        self.parent.isFirstResponder = true
-      }
-    }
-
-    func controlTextDidEndEditing(_ obj: Notification) {
-      DispatchQueue.main.async {
-        self.parent.isFirstResponder = false
-        self.parent.onCommit()
-      }
     }
 
     func controlTextDidChange(_ obj: Notification) {
@@ -48,7 +56,12 @@ struct ResponderTextField: NSViewRepresentable {
   }
 
   func makeNSView(context: Context) -> NSTextField {
-    let textField = NSTextField(string: text)
+    let textField = FocusAwareTextField(string: text)
+    textField.onFocusChange = { isFocused in
+      DispatchQueue.main.async {
+        self.isFirstResponder = isFocused
+      }
+    }
     textField.delegate = context.coordinator
     return textField
   }

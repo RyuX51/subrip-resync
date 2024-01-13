@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 
 class ContentViewModel: ObservableObject {
   @Published var subtitles: [Subtitle] = []
+  @Published var warningMessage: String?
   @Published var alertInfo: AlertInfo?
   @Published var isListVisible = false
   @Published var searchText = ""
@@ -17,7 +18,20 @@ class ContentViewModel: ObservableObject {
 
   var fileName = ""
   var fileExtension = ""
-  var active: Set<Int> = []
+  var active: Set<Int> = [] {
+    didSet {
+      switch active.count {
+      case 3...:
+        withAnimation {
+          warningMessage = "If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result."
+        }
+      default:
+        withAnimation {
+          warningMessage = nil
+        }
+      }
+    }
+  }
   var subtitleService: SubtitleService!
   var keyDownMonitor: Any?
 
@@ -86,9 +100,6 @@ class ContentViewModel: ObservableObject {
   }
 
   func useOffset(from subtitle: Subtitle, completion: @escaping () -> Void) {
-    if active.count == 2 && !active.contains(subtitle.id) {
-      alertInfo = .init(.info, message: "If more then 2 subtitles are active, the offsets will be calculated linearly between the first and the last one to archive the best result.")
-    }
     active.insert(subtitle.id)
     updateOffsets(ignore: subtitle, completion: completion)
   }
