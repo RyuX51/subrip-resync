@@ -8,26 +8,6 @@
 import AppKit
 import SwiftUI
 
-class FocusAwareTextField: NSTextField {
-  var onFocusChange: (Bool) -> Void = { _ in }
-
-  override func becomeFirstResponder() -> Bool {
-    let result = super.becomeFirstResponder()
-    if result {
-      onFocusChange(true)
-    }
-    return result
-  }
-
-  override func resignFirstResponder() -> Bool {
-    let result = super.resignFirstResponder()
-    if result {
-      onFocusChange(false)
-    }
-    return result
-  }
-}
-
 struct ResponderTextField: NSViewRepresentable {
   @Binding var text: String
   @Binding var isFirstResponder: Bool

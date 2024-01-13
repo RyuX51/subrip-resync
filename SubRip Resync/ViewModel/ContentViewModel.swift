@@ -15,6 +15,8 @@ class ContentViewModel: ObservableObject {
   @Published var isListVisible = false
   @Published var searchText = ""
   @Published var showSettings = false
+  var activeSubtitle: Subtitle?
+  var updateOffsetString: (() -> Void)?
 
   var fileName = ""
   var fileExtension = ""
@@ -158,12 +160,31 @@ class ContentViewModel: ObservableObject {
   }
 
   private func enableKeyDownMonitor() {
-    keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event -> NSEvent? in
+    keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event -> NSEvent? in
+
+      guard let subtitle = self?.activeSubtitle else { return event }
+
       switch event.keyCode {
       case 126: // Arrow up key code
-        print("arrow up pressed")
+        subtitle.startOffset += 0.1
+        subtitle.endOffset += 0.1
+        self?.updateOffsetString?()
+        self?.useOffset(from: subtitle) {
+          DispatchQueue.main.async {
+            subtitle.useForResync = true
+            self?.objectWillChange.send()
+          }
+        }
       case 125: // Arrow down key code
-        print("arrow down pressed")
+        subtitle.startOffset -= 0.1
+        subtitle.endOffset -= 0.1
+        self?.updateOffsetString?()
+        self?.useOffset(from: subtitle) {
+          DispatchQueue.main.async {
+            subtitle.useForResync = true
+            self?.objectWillChange.send()
+          }
+        }
       default:
         break
       }

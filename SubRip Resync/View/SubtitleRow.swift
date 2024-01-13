@@ -62,9 +62,24 @@ struct SubtitleRow: View {
                 offsetString = String(round(newValue * 10) / 10)
               }
             }
-          //            .onChange(of: isTextFieldActive) {
-          //              print("isTextFieldActive: \($0)")
-          //            }
+            .onChange(of: isTextFieldActive) { isActive in
+              print("subtitle \(subtitle.id) is active: \(isActive)")
+              if isActive {
+                viewModel.activeSubtitle = subtitle
+                viewModel.updateOffsetString = {
+                  offsetString = String(round(subtitle.startOffset * 10) / 10)
+                }
+                // broadcast to the other text views that this one has the focus now
+                NotificationCenter.default.post(name: .textFieldHasFocus, object: subtitle.id)
+              }
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .textFieldHasFocus)) { data in
+              guard let subtitleId = data.object as? Int else { return }
+              if subtitle.id != subtitleId {
+                // this TextField doesn't have focus anymore
+                isTextFieldActive = false
+              }
+            }
 
           Text("s")
 
@@ -72,6 +87,8 @@ struct SubtitleRow: View {
             isTextFieldActive = false
             subtitle.startOffset += 0.1
             subtitle.endOffset += 0.1
+            viewModel.activeSubtitle = nil
+            viewModel.updateOffsetString = nil
             viewModel.useOffset(from: subtitle) {
               DispatchQueue.main.async {
                 subtitle.useForResync = true
@@ -82,6 +99,8 @@ struct SubtitleRow: View {
             isTextFieldActive = false
             subtitle.startOffset -= 0.1
             subtitle.endOffset -= 0.1
+            viewModel.activeSubtitle = nil
+            viewModel.updateOffsetString = nil
             viewModel.useOffset(from: subtitle) {
               DispatchQueue.main.async {
                 subtitle.useForResync = true

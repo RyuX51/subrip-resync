@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AC15DCCE2B51F0BA00B5BD05 /* AlertInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15DCCD2B51F0BA00B5BD05 /* AlertInfo.swift */; };
 		AC15DCD02B51F6EE00B5BD05 /* ResponderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15DCCF2B51F6EE00B5BD05 /* ResponderTextField.swift */; };
+		AC15DCD22B52205A00B5BD05 /* FocusAwareTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15DCD12B52205A00B5BD05 /* FocusAwareTextField.swift */; };
+		AC15DCD42B52225300B5BD05 /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15DCD32B52225300B5BD05 /* NotificationName.swift */; };
 		AC1AE03F2AE0523300952CC4 /* SubRip_ResyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */; };
 		AC1AE0412AE0523300952CC4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1AE0402AE0523300952CC4 /* ContentView.swift */; };
 		AC1AE0432AE0523400952CC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC1AE0422AE0523400952CC4 /* Assets.xcassets */; };
@@ -35,6 +37,8 @@
 /* Begin PBXFileReference section */
 		AC15DCCD2B51F0BA00B5BD05 /* AlertInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertInfo.swift; sourceTree = "<group>"; };
 		AC15DCCF2B51F6EE00B5BD05 /* ResponderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponderTextField.swift; sourceTree = "<group>"; };
+		AC15DCD12B52205A00B5BD05 /* FocusAwareTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusAwareTextField.swift; sourceTree = "<group>"; };
+		AC15DCD32B52225300B5BD05 /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		AC1AE03B2AE0523300952CC4 /* SubRip Resync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SubRip Resync.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC1AE03E2AE0523300952CC4 /* SubRip_ResyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubRip_ResyncApp.swift; sourceTree = "<group>"; };
 		AC1AE0402AE0523300952CC4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -123,10 +127,11 @@
 				AC1AE0402AE0523300952CC4 /* ContentView.swift */,
 				AC835FF92AE1F16A0066E133 /* ContentView+DropDelegate.swift */,
 				AC1AE0562AE0739700952CC4 /* DropHereView.swift */,
+				AC15DCD12B52205A00B5BD05 /* FocusAwareTextField.swift */,
 				AC1AE0542AE054D800952CC4 /* LogoView.swift */,
+				AC15DCCF2B51F6EE00B5BD05 /* ResponderTextField.swift */,
 				ACA3ECE72AE40820009CAE45 /* SettingsView.swift */,
 				AC835FF72AE1F0090066E133 /* SubtitleRow.swift */,
-				AC15DCCF2B51F6EE00B5BD05 /* ResponderTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -134,13 +139,14 @@
 		AC1AE04E2AE052FB00952CC4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AC15DCCD2B51F0BA00B5BD05 /* AlertInfo.swift */,
 				ACE07E3A2AE2FD200099A2FF /* ASSTime.swift */,
+				AC15DCD32B52225300B5BD05 /* NotificationName.swift */,
 				ACA3ECF02AE4C41F009CAE45 /* SelectedFile.swift */,
 				ACA3ECE52AE407F5009CAE45 /* Settings.swift */,
 				ACE07E382AE2FD150099A2FF /* SRTTime.swift */,
 				AC1AE04F2AE0530600952CC4 /* Subtitle.swift */,
 				AC668C1E2AE0C79D0057816A /* Time.swift */,
-				AC15DCCD2B51F0BA00B5BD05 /* AlertInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -157,8 +163,8 @@
 		ACE07E312AE2E8DE0099A2FF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				ACE07E322AE2E8F10099A2FF /* SRTService.swift */,
 				ACE07E342AE2F2E60099A2FF /* ASSService.swift */,
+				ACE07E322AE2E8F10099A2FF /* SRTService.swift */,
 				ACE07E362AE2F82B0099A2FF /* SubtitleService.swift */,
 			);
 			path = Services;
@@ -267,11 +273,13 @@
 				AC15DCCE2B51F0BA00B5BD05 /* AlertInfo.swift in Sources */,
 				ACE07E352AE2F2E60099A2FF /* ASSService.swift in Sources */,
 				ACA3ECEF2AE4BF94009CAE45 /* CloseButton.swift in Sources */,
+				AC15DCD42B52225300B5BD05 /* NotificationName.swift in Sources */,
 				AC1AE0532AE0533400952CC4 /* ContentViewModel.swift in Sources */,
 				ACA3ECF12AE4C41F009CAE45 /* SelectedFile.swift in Sources */,
 				AC668C1F2AE0C79D0057816A /* Time.swift in Sources */,
 				ACE07E392AE2FD150099A2FF /* SRTTime.swift in Sources */,
 				ACA3ECE82AE40820009CAE45 /* SettingsView.swift in Sources */,
+				AC15DCD22B52205A00B5BD05 /* FocusAwareTextField.swift in Sources */,
 				ACA3ECE62AE407F5009CAE45 /* Settings.swift in Sources */,
 				AC1AE0502AE0530600952CC4 /* Subtitle.swift in Sources */,
 				AC1AE0572AE0739700952CC4 /* DropHereView.swift in Sources */,
